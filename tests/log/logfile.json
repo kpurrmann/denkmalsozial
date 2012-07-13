@@ -1,0 +1,1 @@
+{"event":"suiteStart","suite":"","tests":1}{"event":"suiteStart","suite":"IndexControllerTest","tests":1}{"event":"testStart","suite":"IndexControllerTest","test":"IndexControllerTest::testIndexAction"}{"event":"test","suite":"IndexControllerTest","test":"IndexControllerTest::testIndexAction","status":"pass","time":0.17208290100098,"trace":[],"message":""}
