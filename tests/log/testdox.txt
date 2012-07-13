@@ -1,3 +1,6 @@
 IndexController
  [x] Index action
 
+Application_Model_User
+ [x] Can create user
+
