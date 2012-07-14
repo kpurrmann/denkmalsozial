@@ -17,6 +17,10 @@ class Application_Model_UserTest extends Zend_Test_PHPUnit_ControllerTestCase {
 		$this->assertInstanceOf('Application_Model_User', $user);
 	}
 
+	public function testUserObjectHasAttributes(){
+		
+	}
+
 }
 
 ?>
