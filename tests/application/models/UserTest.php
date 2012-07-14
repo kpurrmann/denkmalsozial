@@ -17,9 +17,13 @@ class Application_Model_UserTest extends Zend_Test_PHPUnit_ControllerTestCase {
 		$this->assertInstanceOf('Application_Model_User', $user);
 	}
 
-	public function testUserObjectHasAttributes(){
+	public function testUserObjectHasAttributes() {
 		$user = new Application_Model_User();
-		$this->assertObjectHasAttribute('email', $object);
+		$this->assertObjectHasAttribute('_id', $user);
+		$this->assertObjectHasAttribute('_email', $user);
+		$this->assertObjectHasAttribute('_active', $user);
+		$this->assertObjectHasAttribute('_hash', $user);
+		$this->assertObjectHasAttribute('_created', $user);
 	}
 
 }
