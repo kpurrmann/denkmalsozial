@@ -9,10 +9,10 @@
     
 	<filter>
 		<whitelist>
-			<directory suffix=".php">./library</directory>
-			<directory suffix=".php">./application</directory>
+			<directory suffix=".php">../library</directory>
+			<directory suffix=".php">../application</directory>
 			<exclude>
-				<file suffix=".php">./application/controllers/ErrorController.php</file>
+				<file suffix=".php">../application/controllers/ErrorController.php</file>
 			</exclude>
 		</whitelist>
 	</filter>
