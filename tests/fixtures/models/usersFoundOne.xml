@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <users id="1" email="user1@test.de" active="1" hash="myHash1" created="2012-06-25 20:55:48" />
+</dataset>
