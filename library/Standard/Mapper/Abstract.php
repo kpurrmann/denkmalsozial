@@ -26,5 +26,3 @@ abstract class Standard_Mapper_Abstract {
 	}
 
 }
-
-?>

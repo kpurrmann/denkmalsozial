@@ -48,6 +48,38 @@ class Application_Model_UserMapperTest extends MapperTestCase {
 		$this->assertDataSetsMatchXML('usersFoundCreated.xml', $this->_dataSet);
 
 		$this->assertFalse($userMapper->save(new Application_Model_User()));
+
+
+		unset($data['email']);
+		$noUser = $userMapper->createUser($data);
+		$this->assertFalse($noUser);
+	}
+
+	public function testFindByHash() {
+		$userMapper = new Application_Model_UserMapper();
+		$user	   = $userMapper->findByHash('myHash1');
+		$this->assertInstanceOf('Application_Model_User', $user);
+		$this->_dataSet = $this->convertRecordToDataSet($user->toArray(), 'users');
+		$this->assertDataSetsMatchXML('usersFoundOne.xml', $this->_dataSet);
+	}
+
+	public function testCanCreateHash() {
+		$data = array();
+		$data['email']   = 'user6@test.de';
+		$data['active']  = false;
+		$data['created'] = '2012-06-25 20:55:48';
+		$userMapper	  = new Application_Model_UserMapper();
+		$arrayHashes	 = array();
+
+		$user = $userMapper->createUser($data);
+		$this->assertInstanceOf('Application_Model_User', $user);
+		$this->assertNotEmpty($user->getHash());
+
+		for ($i = 0; $i < 5; $i++) {
+			$user						  = $userMapper->createUser($data);
+			$this->assertArrayNotHasKey($user->getHash(), $arrayHashes);
+			$arrayHashes[$user->getHash()] = true;
+		}
 	}
 
 }
