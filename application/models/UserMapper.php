@@ -12,7 +12,6 @@ class Application_Model_UserMapper extends Standard_Mapper_Abstract {
 	 * @var String
 	 */
 	protected $_dbTableName = 'Application_Model_DbTable_Users';
-
 	/**
 	 * 
 	 * @var Zend_Db_Table_Abstract
@@ -48,6 +47,8 @@ class Application_Model_UserMapper extends Standard_Mapper_Abstract {
 
 		if (isset($data['active']))
 			$user->setActive($data['active']);
+		else
+			$user->setActive(false);
 
 		if (isset($data['created']))
 			$user->setCreated($data['created']);
@@ -78,9 +79,11 @@ class Application_Model_UserMapper extends Standard_Mapper_Abstract {
 	 */
 	public function findByHash($hash) {
 		$select = $this->_table->select()->where('hash = ?', $hash);
-		$row	= $this->_table->fetchRow($select);
-		$user   = $this->createUser($row->toArray());
-		return $user;
+		if($row	= $this->_table->fetchRow($select)){
+			$user   = $this->createUser($row->toArray());
+			return $user;
+		}
+		return false;
 	}
 
 	/**
@@ -93,6 +96,9 @@ class Application_Model_UserMapper extends Standard_Mapper_Abstract {
 		$data = $user->toArray();
 		if ($data != null && !empty($data) &&
 		   !empty($data['email']) && $data['email'] != null) {
+			if(isset($data['id']) && $data['id'] != null) {
+				return $this->getDbTable()->update($data, array('id = ?' => $data['id']));
+			}
 			return $this->getDbTable()->insert($data);
 		}
 		return false;

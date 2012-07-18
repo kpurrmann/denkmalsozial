@@ -12,7 +12,7 @@ class Application_Form_Register extends Zend_Form {
 	 */
 	public function init() {
 
-		$this->setAction('user/register');
+		$this->setAction('register');
 
 		// email element
 		$email = new Zend_Form_Element_Text('email');
@@ -37,12 +37,25 @@ class Application_Form_Register extends Zend_Form {
 
 		// submit element
 		$submit = new Zend_Form_Element_Submit('submit');
+		$submit->setAttrib('class', 'btn');
 
 		// Set up form
 		$this->addElement($email)
 		   ->addElement($honeypot)
 		   ->addElement($hash)
 		   ->addElement($submit);
+	}
+
+	public function process(array $data){
+		if($this->isValid($data)) {
+			$userMapper = new Application_Model_UserMapper();
+			$user = $userMapper->createUser($data);
+			if($user)
+				$userMapper->save($user);
+
+			return true;
+		}
+		return false;
 	}
 
 }

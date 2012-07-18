@@ -15,6 +15,12 @@ class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase {
 		$this->bootstrap = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/configs/application.ini');
 		parent::setUp();
 	}
+
+	protected function tearDown() {
+		$this->resetRequest();
+		$this->resetResponse();
+		parent::tearDown();
+	}
 }
 
 ?>

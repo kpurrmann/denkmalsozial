@@ -1,0 +1,148 @@
+body {
+	font-family: 'Open Sans', Tahoma, Arial, sans-serif;
+	background: transparent url(../images/layout/background.jpg);
+}
+
+/* ------------------------ Überschriften ------------------------------------------ */
+
+h1, h2, h3 {
+	text-transform: uppercase;
+	padding-top: 4px;
+	font-weight: normal;
+}
+
+.hero-unit h1 {
+	text-indent: -9999em;
+	background: url('../images/layout/puzzle-dir-deinen-sound.png') no-repeat 0 0;
+	display: block;
+	width: 574px;
+	height:77px;
+}
+
+h2 {
+	margin-bottom: 1.5em;
+}
+
+
+#lightbox h2 {
+	margin: 0 0 .5em;
+}
+
+h2.special {
+	margin: 0 0 0.3em ;
+	font-family: 'JournalRegular', sans-serif;
+	font-size: 42px;
+}
+/* ------------------------ Lightbox ------------------------------- */
+
+#cboxCurrent, #cboxTitle {
+	display: none !important;
+}
+
+#cboxNext, #cboxPrevious, #cboxClose {
+	color: #18516c;
+}
+/* ------------------------ Navigation ------------------------------- */
+
+ul#footer-navigation {
+	margin: 0;
+	padding: 0;
+
+}
+ul#footer-navigation li  {
+	display: inline;
+	list-style: none;
+}
+ul#footer-navigation li a  {
+	text-transform: uppercase;
+	color: #333;
+}
+
+/* ------------------------ Elemente ------------------------------- */
+
+hr {
+	background: transparent url(../images/layout/linien-sprite.png) -26px 0 no-repeat;
+	height: 48px;
+	border:0;
+}
+
+hr.special {
+	background: transparent url(../images/layout/linien-sprite.png) -26px -50px no-repeat;
+}
+
+.margin-left-15 {
+	margin-left: 15px;
+}
+
+.padding-top-100 {
+	padding-top: 100px;
+}
+
+footer {
+	margin-bottom: 2em;
+}
+
+/* ------------------------ Bootstrap Modifikationen ------------------------------- */
+
+.hero-unit {
+	background: transparent;
+	padding-bottom: 0;
+	padding-left: 0;
+}
+
+.row {
+	margin-bottom: 0;
+}
+
+.btn {
+	margin-bottom: 0.5em;
+}
+
+.btn.span3 {
+	margin-left: 0;
+}
+
+.btn-inverse {
+	background-color: #f9f9f9;
+	*background-color: #e0e0e0;
+	background-image: -ms-linear-gradient(top, #f1f1f1, #e0e0e0);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f1f1f1), to(#e0e0e0));
+	background-image: -webkit-linear-gradient(top, #f1f1f1, #e0e0e0);
+	background-image: -o-linear-gradient(top, #f1f1f1, #e0e0e0);
+	background-image: -moz-linear-gradient(top, #f1f1f1, #e0e0e0);
+	background-image: linear-gradient(top, #f1f1f1, #e0e0e0);
+	background-repeat: repeat-x;
+	border-color: #e0e0e0 #e0e0e0 #000000;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#f1f1f1', endColorstr='#e0e0e0', GradientType=0);
+	filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+	color: #333333;
+	text-transform: uppercase;
+	width:230px;
+}
+
+.btn-inverse:hover,
+.btn-inverse:active,
+.btn-inverse.active,
+.btn-inverse.disabled,
+.btn-inverse[disabled] {
+	background-color: #9d9d9d;
+	*background-color: #838383;
+	background-image: -ms-linear-gradient(top, #b5b5b5, #838383);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b5b5b5), to(#838383));
+	background-image: -webkit-linear-gradient(top, #b5b5b5, #838383);
+	background-image: -o-linear-gradient(top, #b5b5b5, #838383);
+	background-image: -moz-linear-gradient(top, #b5b5b5, #838383);
+	background-image: linear-gradient(top, #b5b5b5, #838383);
+	background-repeat: repeat-x;
+	border-color: #838383 #838383 #000000;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#b5b5b5', endColorstr='#838383', GradientType=0);
+	filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+	background-position: 0 0px;
+	-webkit-transition: background-position 0.1s linear;
+	-moz-transition: background-position 0.1s linear;
+	-ms-transition: background-position 0.1s linear;
+	-o-transition: background-position 0.1s linear;
+	transition: background-position 0.1s linear;
+}

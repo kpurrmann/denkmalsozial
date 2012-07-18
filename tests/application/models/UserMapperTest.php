@@ -61,6 +61,18 @@ class Application_Model_UserMapperTest extends MapperTestCase {
 		$this->assertInstanceOf('Application_Model_User', $user);
 		$this->_dataSet = $this->convertRecordToDataSet($user->toArray(), 'users');
 		$this->assertDataSetsMatchXML('usersFoundOne.xml', $this->_dataSet);
+
+		$userNotFound = $userMapper->findByHash('falseHash');
+		$this->assertFalse($userNotFound);
+	}
+
+	public function testCanUpdateUser(){
+		$userMapper = new Application_Model_UserMapper();
+		$user	   = $userMapper->findByHash('myHash4');
+		$user->setActive(TRUE);
+		$userMapper->save($user);
+		$user = $userMapper->findByHash('myHash4');
+		$this->assertEquals('1',$user->getActive());
 	}
 
 	public function testCanCreateHash() {

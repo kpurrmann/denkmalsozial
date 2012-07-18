@@ -1,1 +1,35 @@
-<?php echo $this->layout()->content; ?>
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Dwenkmalsozial</title>
+		<base href="<?php echo $this->baseUrl(); ?>" />
+		<?php $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0'); ?>
+		<?php $this->headMeta()->appendName('author', 'Kevin Purrmann'); ?>
+		<?php $this->headMeta()->appendName('robots', 'index,nofollow'); ?>
+		<?php $this->headMeta()->appendName('revisited-after', '14 days'); ?>
+		<?php $this->headMeta()->appendName('keywords', 'denkmal'); ?>
+		<?php $this->headMeta()->appendName('description', 'Denkmal'); ?>
+		<?php echo $this->headMeta() ?>
+		<?php $this->headLink()->appendStylesheet('http://fonts.googleapis.com/css?family=Open+Sans:400,700') ?>
+		<?php $this->headLink()->appendStylesheet($this->baseUrl() . '/styles/fonts.css') ?>
+		<?php $this->headLink()->appendStylesheet($this->baseUrl() . '/styles/bootstrap.min.css') ?>
+		<?php $this->headLink()->appendStylesheet($this->baseUrl() . '/styles/bootstrap-responsive.min.css') ?>
+		<?php $this->headLink()->appendStylesheet($this->baseUrl() . '/styles/colorbox.css') ?>
+		<?php echo $this->headLink()->appendStylesheet($this->baseUrl() . '/styles/layout.css') ?>
+	</head>
+	<body>
+
+		<div class="container ">
+			<section>
+				<?php echo $this->layout()->content ?>
+			</section>
+		</div>
+
+		<?php $this->headScript()->appendFile('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js'); ?>
+		<?php $this->headScript()->appendFile($this->baseUrl() . '/scripts/bootstrap.min.js'); ?>
+		<?php $this->headScript()->appendFile($this->baseUrl() . '/scripts/jquery.colorbox.min.js'); ?>
+		<?php echo $this->headScript()->appendFile($this->baseUrl() . '/scripts/ajax.js'); ?>
+		<?php echo $this->headScript()->appendFile($this->baseUrl() . '/scripts/validation.js'); ?>
+	</body>
+</html>
