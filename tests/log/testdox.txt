@@ -1,6 +1,8 @@
-IndexController
- [x] Index action
-
-Application_Model_User
- [x] Can create user
+Application_Forms_Register
+ [x] Can create form
+ [x] Form has elements
+ [x] Form can handle hash
+ [x] Form can handle email
+ [x] Form can handle honeypot
+ [x] Can process data
 

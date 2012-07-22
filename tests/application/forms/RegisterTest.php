@@ -30,7 +30,7 @@ class Application_Forms_RegisterTest extends ControllerTestCase {
 		$this->_form = new Application_Form_Register();
 		$this->_hash = $this->createHash();
 		$this->_data = array(
-		   'email'   => 'newuser@test.de',
+		   'email'   => 'newuser'. uniqid().'@test.de',
 		   'msg'	 => '',
 		   'ds_hash' => $this->_hash,
 		   'submit'  => 'submit',
@@ -40,7 +40,7 @@ class Application_Forms_RegisterTest extends ControllerTestCase {
 	public function testCanCreateForm() {
 		$this->assertInstanceOf('Zend_Form', $this->_form);
 		$this->assertInstanceOf('Application_Form_Register', $this->_form);
-		$this->assertEquals('register', $this->_form->getAction());
+		$this->assertEquals('/user/create', $this->_form->getAction());
 		$this->assertEquals('post', $this->_form->getMethod());
 	}
 
@@ -81,9 +81,9 @@ class Application_Forms_RegisterTest extends ControllerTestCase {
 	}
 
 	public function testCanProcessData() {
-		$this->assertTrue($this->_form->process($this->_data));
+		$newUserId = $this->_form->process($this->_data);
 		$userMapper = new Application_Model_UserMapper();
-		$user	   = $userMapper->find(6);
+		$user	   = $userMapper->find($newUserId);
 		$this->assertInstanceOf('Application_Model_User', $user);
 
 		

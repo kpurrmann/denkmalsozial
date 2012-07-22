@@ -1,4 +1,8 @@
 TAP version 13
-ok 1 - IndexControllerTest::testIndexAction
-ok 2 - Application_Model_UserTest::testCanCreateUser
-1..2
+ok 1 - Application_Forms_RegisterTest::testCanCreateForm
+ok 2 - Application_Forms_RegisterTest::testFormHasElements
+ok 3 - Application_Forms_RegisterTest::testFormCanHandleHash
+ok 4 - Application_Forms_RegisterTest::testFormCanHandleEmail
+ok 5 - Application_Forms_RegisterTest::testFormCanHandleHoneypot
+ok 6 - Application_Forms_RegisterTest::testCanProcessData
+1..6

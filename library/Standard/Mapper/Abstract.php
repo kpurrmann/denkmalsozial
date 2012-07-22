@@ -5,24 +5,24 @@
  *
  * @author Kevin Purrmann
  */
-abstract class Standard_Mapper_Abstract {
+abstract class Standard_Mapper_Abstract implements Standard_Mapper_Interface
+{
 
-	protected $_dbTable;
-	protected $_dbTableName;
+	protected $_table;
 
-	public function setDbTable($dbTable) {
+	protected function setDbTable($dbTable)
+	{
 		if (is_string($dbTable)) {
 			$dbTable = new $dbTable();
 		}
-		$this->_dbTable = $dbTable;
+		$this->_table = $dbTable;
 		return $this;
 	}
 
-	public function getDbTable() {
-		if (null === $this->_dbTable) {
-			$this->setDbTable($this->_dbTableName);
-		}
-		return $this->_dbTable;
-	}
-
+	/**
+	 * Gets Current Db_Table, if not set, make a new instance of Zend_Db_Table_Abstract
+	 * @param void
+	 * @return Zend_Db_Table_Abstract
+	 */
+	abstract public function getDbTable();
 }

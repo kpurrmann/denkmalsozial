@@ -5,7 +5,8 @@
  * 
  * @author Kevin Purrmann
  */
-class Application_Model_User {
+class Application_Model_User extends Standard_Model_Abstract
+{
 
 	/**
 	 * User Id
@@ -37,58 +38,89 @@ class Application_Model_User {
 	 */
 	protected $_created;
 
-	public function getId() {
-		return $this->_id;
+	/**
+	 * Mapper
+	 * @var Application_Model_UserMapper
+	 */
+	protected $_mapper;
+
+	public function getMapper()
+	{
+		if (null === $this->_mapper) {
+			$this->setMapper(new Application_Model_UserMapper());
+		}
+		return $this->_mapper;
 	}
 
-	public function setId($id) {
+	public function getId()
+	{
+		return (int) $this->_id;
+	}
+
+	public function setId($id)
+	{
 		$this->_id = $id;
+		return $this;
 	}
 
-	public function getEmail() {
+	public function getEmail()
+	{
 		return $this->_email;
 	}
 
-	public function setEmail($email) {
+	public function setEmail($email)
+	{
 		$this->_email = $email;
+		return $this;
 	}
 
-	public function getActive() {
+	public function getActive()
+	{
+		if (!$this->_active) {
+			$this->setActive(0);
+		}
 		return $this->_active;
 	}
 
-	public function setActive($active) {
+	public function setActive($active)
+	{
 		$this->_active = $active;
+		return $this;
 	}
 
-	public function getHash() {
+	public function getHash()
+	{
+		if (!$this->_hash) {
+			$this->setHash($this->createHash($this->_email));
+		}
 		return $this->_hash;
 	}
 
-	public function setHash($hash) {
+	public function setHash($hash)
+	{
 		$this->_hash = $hash;
+		return $this;
 	}
 
-	public function getCreated() {
+	public function getCreated()
+	{
 		return $this->_created;
 	}
 
-	public function setCreated($created) {
+	public function setCreated($created)
+	{
 		$this->_created = $created;
+		return $this;
 	}
 
 	/**
-	 * Returns Array with actual Object
-	 * @return $array Array
+	 * Creates Hash
+	 * @return String $hash
 	 */
-	public function toArray() {
-		$array = array();
-		$array['id']	  = $this->getId();
-		$array['email']   = $this->getEmail();
-		$array['active']  = $this->getActive();
-		$array['hash']	  = $this->getHash();
-		$array['created'] = $this->getCreated();
-		return $array;
+	private function createHash($email)
+	{
+		$date = new Zend_Date();
+		return md5($email . $date->toString() . uniqid());
 	}
 
 }

@@ -19,13 +19,13 @@ class UserControllerTest extends ControllerTestCase {
 	 * Hash is different
 	 * @todo Write Test for Succeed
 	 */
-	public function testRegisterActionFails() {
-		$params = array('action'	 => 'register', 'controller' => 'User', 'module'	 => 'default');
+	public function testCreateActionFails() {
+		$params = array('action'	 => 'create', 'controller' => 'User', 'module'	 => 'default');
 		$urlParams   = $this->urlizeOptions($params);
 		$url		 = $this->url($urlParams);
 		$this->dispatch($url);
 
-		// assertions
+
 		$this->assertModule($urlParams['module']);
 		$this->assertController($urlParams['controller']);
 		$this->assertAction($urlParams['action']);
@@ -50,7 +50,7 @@ class UserControllerTest extends ControllerTestCase {
 		$this->assertEquals('myHash4', $this->getRequest()->getParam('hash'));
 
 		$userMapper = new Application_Model_UserMapper();
-		$user = $userMapper->findByHash($this->getRequest()->getParam('hash'));
+		$user = $userMapper->findOne(array('hash=?' => $this->getRequest()->getParam('hash')));
 		$this->assertEquals('1', $user->getActive());
 	}
 

@@ -17,6 +17,10 @@ class MapperTestCase extends Ibuildings_Test_PHPUnit_DatabaseTestCase_Abstract {
 		parent::setUp();
 	}
 
+	protected function tearDown() {
+		parent::tearDown();
+	}
+
 }
 
 ?>

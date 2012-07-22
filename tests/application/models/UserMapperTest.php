@@ -5,95 +5,112 @@
  *
  * @author Kevin Purrmann
  */
-class Application_Model_UserMapperTest extends MapperTestCase {
+class Application_Model_UserMapperTest extends MapperTestCase
+{
 
 	protected $_initialSeedFile = 'users.xml';
 
-	public function testCanCreateUserMapper() {
+	public function testCanCreateUserMapper()
+	{
 		$userMapper = new Application_Model_UserMapper();
 		$this->assertInstanceOf('Application_Model_UserMapper', $userMapper);
 	}
 
-	public function testCanFindUser() {
+	public function testCanFindUser()
+	{
 		$userMapper = new Application_Model_UserMapper();
 		$user	   = $userMapper->find(1);
-
 		$this->assertInstanceOf('Application_Model_User', $user);
-		$this->_dataSet = $this->convertRecordToDataSet($user->toArray(), 'users');
+		$userArray  = array(
+			'id'	  => $user->getId(),
+			'email'   => $user->getEmail(),
+			'active'  => $user->getActive(),
+			'hash'	=> $user->getHash(),
+			'created' => $user->getCreated(),
+		);
+		$this->_dataSet = $this->convertRecordToDataSet($userArray, 'users');
 		$this->assertDataSetsMatchXML('usersFoundOne.xml', $this->_dataSet);
 
 		$user = $userMapper->find(999999);
 		$this->assertFalse($user);
 	}
 
-	public function testCanCreateAndSaveUser() {
-		$data = array();
-		$data['email']   = 'user6@test.de';
-		$data['active']  = false;
-		$data['hash']	= 'myHash6';
-		$data['created'] = '2012-06-25 20:55:48';
-		$userMapper	  = new Application_Model_UserMapper();
-
-		$user = $userMapper->createUser($data);
-		$this->assertInstanceOf('Application_Model_User', $user);
-		$this->assertEquals($data['email'], $user->getEmail());
-
-		$userId = $userMapper->save($user);
-		$this->assertNotEmpty($userId);
-		$this->assertEquals(6, $userId);
-
-		$user = $userMapper->find($userId);
-		$this->assertInstanceOf('Application_Model_User', $user);
-		$this->_dataSet = $this->convertRecordToDataSet($user->toArray(), 'users');
-		$this->assertDataSetsMatchXML('usersFoundCreated.xml', $this->_dataSet);
-
-		$this->assertFalse($userMapper->save(new Application_Model_User()));
-
-
-		unset($data['email']);
-		$noUser = $userMapper->createUser($data);
-		$this->assertFalse($noUser);
-	}
-
-	public function testFindByHash() {
+	public function testFindOneByHash()
+	{
 		$userMapper = new Application_Model_UserMapper();
-		$user	   = $userMapper->findByHash('myHash1');
+		$where	  = array(
+			'hash=?'   => 'myHash1'
+		);
+		$user	  = $userMapper->findOne($where);
 		$this->assertInstanceOf('Application_Model_User', $user);
-		$this->_dataSet = $this->convertRecordToDataSet($user->toArray(), 'users');
+		$userArray = array(
+			'id'	  => $user->getId(),
+			'email'   => $user->getEmail(),
+			'active'  => $user->getActive(),
+			'hash'	=> $user->getHash(),
+			'created' => $user->getCreated(),
+		);
+		$this->_dataSet = $this->convertRecordToDataSet($userArray, 'users');
 		$this->assertDataSetsMatchXML('usersFoundOne.xml', $this->_dataSet);
 
-		$userNotFound = $userMapper->findByHash('falseHash');
+		$userNotFound = $userMapper->findOne(array('hash=?' => 'falseHash'));
 		$this->assertFalse($userNotFound);
 	}
 
-	public function testCanUpdateUser(){
+	public function testFindOneByEmail()
+	{
 		$userMapper = new Application_Model_UserMapper();
-		$user	   = $userMapper->findByHash('myHash4');
-		$user->setActive(TRUE);
-		$userMapper->save($user);
-		$user = $userMapper->findByHash('myHash4');
-		$this->assertEquals('1',$user->getActive());
+		$user	   = $userMapper->findOne(array('email=?'  => 'user1@test.de'));
+		$this->assertInstanceOf('Application_Model_User', $user);
+		$userArray = array(
+			'id'	  => $user->getId(),
+			'email'   => $user->getEmail(),
+			'active'  => $user->getActive(),
+			'hash'	=> $user->getHash(),
+			'created' => $user->getCreated(),
+		);
+		$this->_dataSet = $this->convertRecordToDataSet($userArray, 'users');
+		$this->assertDataSetsMatchXML('usersFoundOne.xml', $this->_dataSet);
 	}
 
-	public function testCanCreateHash() {
-		$data = array();
-		$data['email']   = 'user6@test.de';
-		$data['active']  = false;
-		$data['created'] = '2012-06-25 20:55:48';
-		$userMapper	  = new Application_Model_UserMapper();
-		$arrayHashes	 = array();
+	public function testCanSaveUser()
+	{
 
-		$user = $userMapper->createUser($data);
-		$this->assertInstanceOf('Application_Model_User', $user);
-		$this->assertNotEmpty($user->getHash());
+		$userArray = array(
+			'email'   => 'user6@test.de',
+			'hash'	=> 'myHash6',
+			'created' => '2012-06-25 20:55:48'
+		);
+		$user	 = new Application_Model_User($userArray);
+		$userId   = $user->getMapper()->save($user);
 
-		for ($i = 0; $i < 5; $i++) {
-			$user						  = $userMapper->createUser($data);
-			$this->assertArrayNotHasKey($user->getHash(), $arrayHashes);
-			$arrayHashes[$user->getHash()] = true;
-		}
+		$newUser = $user->getMapper()->find($userId);
+
+		$newUserArray = array(
+			'id'	  => 6,
+			'email'   => $newUser->getEmail(),
+			'active'  => $newUser->getActive(),
+			'hash'	=> $newUser->getHash(),
+			'created' => $newUser->getCreated(),
+		);
+		$this->_dataSet = $this->convertRecordToDataSet($newUserArray, 'users');
+		$this->assertDataSetsMatchXML('usersFoundCreated.xml', $this->_dataSet);
+	}
+
+	public function testCanUpdateUser()
+	{
+		$userArray = array(
+			'id'	=> 5,
+			'email'   => 'user5@test.de',
+			'hash'	=> 'myHash5',
+			'active' => true,
+			'created' => '2012-06-25 20:55:48'
+		);
+
+		$user = new Application_Model_User($userArray);
+		$user->getMapper()->save($user);
+		$updatedUser = $user->getMapper()->find(5);
+		$this->assertEquals('1',$updatedUser->getActive());
 	}
 
 }
-
-?>

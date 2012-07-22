@@ -16,6 +16,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
 
 require_once 'Zend/Loader/Autoloader.php';
 Zend_Loader_Autoloader::getInstance();
+//require_once '../library/Standard/Async/Facade.php';
 require_once 'application/controllers/ControllerTestCase.php';
 require_once 'application/models/MapperTestCase.php';
 

@@ -10,8 +10,21 @@ class Application_Model_UserTest extends ControllerTestCase {
 	public function testCanCreateUser() {
 		$user = new Application_Model_User();
 		$this->assertInstanceOf('Application_Model_User', $user);
+		$data = array(
+		  'email' => 'mymail'
+		);
+		$user = new Application_Model_User($data);
+		$this->assertInstanceOf('Application_Model_User', $user);
+		$this->assertEquals('mymail', $user->getEmail());
+		$this->assertNotEmpty($user->getHash());
+		$this->assertEquals('0', $user->getActive());
 	}
 
+	public function testCanGetMapper(){
+		$user = new Application_Model_User();
+		$this->assertInstanceOf('Application_Model_UserMapper', $user->getMapper());
+	}
+	
 	public function testUserObjectHasAttributes() {
 		$user = new Application_Model_User();
 		$this->assertObjectHasAttribute('_id', $user);
@@ -24,11 +37,11 @@ class Application_Model_UserTest extends ControllerTestCase {
 	public function testCanSetAttributes() {
 		$user = new Application_Model_User();
 		$date = new Zend_Date();
-		$user->setId(1);
-		$user->setEmail('string');
-		$user->setActive(true);
-		$user->setHash('string');
-		$user->setCreated($date);
+		$user->setId(1)
+		   ->setEmail('string')
+		   ->setActive(true)
+		   ->setHash('string')
+		   ->setCreated($date);
 
 		$this->assertEquals(1, $user->getId());
 		$this->assertInternalType('integer', $user->getId());
@@ -44,22 +57,6 @@ class Application_Model_UserTest extends ControllerTestCase {
 
 		$this->assertEquals($date, $user->getCreated());
 		$this->assertInstanceOf('Zend_Date', $user->getCreated());
-	}
-
-	public function testCanConvertObjectAttributesToArray() {
-		$user  = new Application_Model_User();
-		$date  = new Zend_Date();
-		$user->setId(1);
-		$user->setEmail('string');
-		$user->setActive(true);
-		$user->setHash('string');
-		$user->setCreated($date);
-		$array = $user->toArray();
-		$this->assertArrayHasKey('id', $array);
-		$this->assertArrayHasKey('email', $array);
-		$this->assertArrayHasKey('active', $array);
-		$this->assertArrayHasKey('hash', $array);
-		$this->assertArrayHasKey('created', $array);
 	}
 
 }

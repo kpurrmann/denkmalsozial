@@ -5,13 +5,9 @@
  *
  * @author Kevin Purrmann
  */
-class Application_Model_UserMapper extends Standard_Mapper_Abstract {
+class Application_Model_UserMapper extends Standard_Mapper_Abstract
+{
 
-	/**
-	 * Classname of type Zend_Db_Table_Abstract
-	 * @var String
-	 */
-	protected $_dbTableName = 'Application_Model_DbTable_Users';
 	/**
 	 * 
 	 * @var Zend_Db_Table_Abstract
@@ -21,39 +17,21 @@ class Application_Model_UserMapper extends Standard_Mapper_Abstract {
 	/**
 	 * Constructor sets table
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		$this->_table = $this->getDbTable();
 	}
 
 	/**
-	 * Creates a User
-	 * @var array $data
-	 * @return Application_Model_User $user
+	 * Get current db table
+	 * @return Application_Model_DbTable_Users
 	 */
-	public function createUser(array $data) {
-		$user = new Application_Model_User();
-		if (isset($data['id']))
-			$user->setId($data['id']);
-
-		if (isset($data['email']))
-			$user->setEmail($data['email']);
-		else
-			return false;
-
-		if (isset($data['hash']))
-			$user->setHash($data['hash']);
-		else
-			$user->setHash($this->createHash($user->getEmail()));
-
-		if (isset($data['active']))
-			$user->setActive($data['active']);
-		else
-			$user->setActive(false);
-
-		if (isset($data['created']))
-			$user->setCreated($data['created']);
-
-		return $user;
+	public function getDbTable()
+	{
+		if (null === $this->_table) {
+			$this->setDbTable('Application_Model_DbTable_Users');
+		}
+		return $this->_table;
 	}
 
 	/*
@@ -62,55 +40,50 @@ class Application_Model_UserMapper extends Standard_Mapper_Abstract {
 	 * @return $user Application_Model_User
 	 */
 
-	public function find($id) {
+	public function find($id)
+	{
 		$result = $this->_table->find($id);
 		if (0 == count($result)) {
 			return false;
 		}
-		$row  = $result->current();
-		$user = $this->createUser($row->toArray());
-		return $user;
+		$row = $result->current();
+		return new Application_Model_User($row->toArray());
 	}
 
 	/**
-	 * Find Dataset of User depends on hashstring
-	 * @var string $hash
-	 * @return Application_Model_User | false
+	 * @param string|array|Zend_Db_Table_Select $where  OPTIONAL An SQL WHERE clause or Zend_Db_Table_Select object.
+	 * @param string|array                      $order  OPTIONAL An SQL ORDER clause.
+	 * @param int                               $offset OPTIONAL An SQL OFFSET value.
+	 * @return Application_Model_User|false
 	 */
-	public function findByHash($hash) {
-		$select = $this->_table->select()->where('hash = ?', $hash);
-		if($row	= $this->_table->fetchRow($select)){
-			$user   = $this->createUser($row->toArray());
-			return $user;
+	public function findOne($where = null, $order = null, $offset = null)
+	{
+		if ($row = $this->_table->fetchRow($where, $order, $offset)) {
+			return new Application_Model_User($row->toArray());
 		}
 		return false;
 	}
 
 	/**
 	 * Saves User in Database and returns UserId or false
-	 * @var Application_Model_User $user
-	 * @return $userId Integer | boolean
+	 * @param Application_Model_User $user
+	 * @return integer|boolean User Id
 	 */
-	public function save(Application_Model_User $user) {
+	public function save(Application_Model_User $user)
+	{
+		$data = array(
+			'id'	  => $user->getId(),
+			'email'   => $user->getEmail(),
+			'active'  => $user->getActive(),
+			'hash'	=> $user->getHash(),
+			'created' => $user->getCreated(),
+		);
 
-		$data = $user->toArray();
-		if ($data != null && !empty($data) &&
-		   !empty($data['email']) && $data['email'] != null) {
-			if(isset($data['id']) && $data['id'] != null) {
-				return $this->getDbTable()->update($data, array('id = ?' => $data['id']));
-			}
-			return $this->getDbTable()->insert($data);
+		if ($data['id'] != null) {
+			return $this->getDbTable()->update($data, array('id = ?' => $data['id']));
 		}
-		return false;
-	}
-
-	/**
-	 * Creates Hash
-	 * @return String $hash
-	 */
-	private function createHash($email) {
-		$date = new Zend_Date();
-		return md5($email . $date->toString() . uniqid());
+		unset($data['id']);
+		return $this->getDbTable()->insert($data);
 	}
 
 }
