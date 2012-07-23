@@ -42,15 +42,7 @@ class Application_Model_User extends Standard_Model_Abstract
 	 * Mapper
 	 * @var Application_Model_UserMapper
 	 */
-	protected $_mapper;
-
-	public function getMapper()
-	{
-		if (null === $this->_mapper) {
-			$this->setMapper(new Application_Model_UserMapper());
-		}
-		return $this->_mapper;
-	}
+	protected $_mapper = 'Application_Model_UserMapper';
 
 	public function getId()
 	{

@@ -5,18 +5,21 @@
  *
  * @author Kevin Purrmann
  */
-abstract class Standard_Model_Abstract implements Standard_Model_Interface {
+class Standard_Model_Abstract implements Standard_Model_Interface
+{
 
-	protected  $_mapper;
+	protected $_mapper;
 
-	public function __construct(array $options = null) {
+	public function __construct(array $options = null)
+	{
 
 		if (is_array($options)) {
 			$this->setOptions($options);
 		}
 	}
 
-	public function setOptions(array $options) {
+	public function setOptions(array $options)
+	{
 		$methods = get_class_methods($this);
 		foreach ($options as $key => $value) {
 			$method = 'set' . ucfirst($key);
@@ -26,7 +29,8 @@ abstract class Standard_Model_Abstract implements Standard_Model_Interface {
 		}
 	}
 
-	protected function setMapper($mapper) {
+	protected function setMapper($mapper)
+	{
 		$this->_mapper = $mapper;
 		return $this;
 	}
@@ -34,8 +38,15 @@ abstract class Standard_Model_Abstract implements Standard_Model_Interface {
 	/**
 	 * Returns current Mapper
 	 * @return Standard_Mapper
-	 **/
-	public abstract function getMapper();
+	 * */
+	public function getMapper()
+	{
+		if (is_string($this->_mapper)) {
+			$this->setMapper(new $this->_mapper());
+		}
+		return $this->_mapper;
+	}
+
 }
 
 ?>

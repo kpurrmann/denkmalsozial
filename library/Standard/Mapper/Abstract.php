@@ -8,7 +8,19 @@
 abstract class Standard_Mapper_Abstract implements Standard_Mapper_Interface
 {
 
+	/**
+	 *
+	 * @var Zend_Db_Table_Abstract
+	 */
 	protected $_table;
+
+	/**
+	 * Constructor sets table
+	 */
+	public function __construct()
+	{
+		$this->_table = $this->getDbTable();
+	}
 
 	protected function setDbTable($dbTable)
 	{

@@ -25,7 +25,10 @@
       <modelsDirectory>
         <dbTableDirectory>
           <dbTableFile dbTableName="Users"/>
+          <dbTableFile dbTableName="Flowers"/>
         </dbTableDirectory>
+        <modelFile modelName="Flower"/>
+        <modelFile modelName="FlowerMapper"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <viewsDirectory>

@@ -9,20 +9,6 @@ class Application_Model_UserMapper extends Standard_Mapper_Abstract
 {
 
 	/**
-	 * 
-	 * @var Zend_Db_Table_Abstract
-	 */
-	protected $_table;
-
-	/**
-	 * Constructor sets table
-	 */
-	public function __construct()
-	{
-		$this->_table = $this->getDbTable();
-	}
-
-	/**
 	 * Get current db table
 	 * @return Application_Model_DbTable_Users
 	 */

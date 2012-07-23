@@ -13,6 +13,7 @@ class Application_Model_UserMapperTest extends MapperTestCase
 	public function testCanCreateUserMapper()
 	{
 		$userMapper = new Application_Model_UserMapper();
+		$this->assertInstanceOf('Standard_Mapper_Abstract', $userMapper);
 		$this->assertInstanceOf('Application_Model_UserMapper', $userMapper);
 	}
 
